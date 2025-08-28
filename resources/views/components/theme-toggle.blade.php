@@ -1,1 +1,0 @@
-{{-- Theme Toggle Component --}}

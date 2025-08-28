@@ -38,36 +38,36 @@ class UserService
         return $this->firestoreService->delete('users', $id);
     }
 
-public function searchUsers(string $searchTerm)
-{
-    // Search by name or email
-    $nameResults = $this->firestoreService->getAll('users', [
-        ['name', '>=', $searchTerm],
-        ['name', '<=', $searchTerm . '\uf8ff']
-    ]);
-    
-    $emailResults = $this->firestoreService->getAll('users', [
-        ['email', '>=', $searchTerm],
-        ['email', '<=', $searchTerm . '\uf8ff']
-    ]);
-    
-    // Merge and remove duplicates
-    $allResults = array_merge($nameResults, $emailResults);
-    $uniqueResults = array_values(array_unique($allResults, SORT_REGULAR));
-    
-    return $uniqueResults;
-}
+    public function searchUsers(string $searchTerm)
+    {
+        // Search by name or email
+        $nameResults = $this->firestoreService->getAll('users', [
+            ['name', '>=', $searchTerm],
+            ['name', '<=', $searchTerm . '\uf8ff']
+        ]);
+        
+        $emailResults = $this->firestoreService->getAll('users', [
+            ['email', '>=', $searchTerm],
+            ['email', '<=', $searchTerm . '\uf8ff']
+        ]);
+        
+        // Merge and remove duplicates
+        $allResults = array_merge($nameResults, $emailResults);
+        $uniqueResults = array_values(array_unique($allResults, SORT_REGULAR));
+        
+        return $uniqueResults;
+    }
 
-public function getUsersByRole(string $role)
-{
-    return $this->firestoreService->getAll('users', [['role', '==', $role]]);
-}
+    public function getUsersByRole(string $role)
+    {
+        return $this->firestoreService->getAll('users', [['role', '==', $role]]);
+    }
 
-public function updateUserStatus(string $id, string $status)
-{
-    return $this->firestoreService->update('users', $id, [
-        'status' => $status,
-        'status_updated_at' => new \DateTime()
-    ]);
-}
+    public function updateUserStatus(string $id, string $status)
+    {
+        return $this->firestoreService->update('users', $id, [
+            'status' => $status,
+            'status_updated_at' => new \DateTime()
+        ]);
+    }
 }
